@@ -5,11 +5,6 @@
     "additionalProperties": false,
     "type": "object",
     "properties": {
-        "company_number":{
-            "type":"string",
-            "title":"Company number",
-            "description":"The Companies House number for this SME"
-        },
         "months_revenue": {
             "title":"Months of revenue",
             "description":"How long the SME has been receiving revenues, in months",
