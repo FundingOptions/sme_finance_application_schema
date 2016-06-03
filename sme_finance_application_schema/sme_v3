@@ -128,8 +128,8 @@
             "enum": [
                 "limited_company",
                 "limited_partnership",
-                "partnership_less_than_5",
-                "partnership_more_than_4",
+                "partnership_less_than_equal_to_3",
+                "partnership_greater_than_3",
                 "public_company",
                 "sole_trader",
                 "charity_limited_by_guarantee",
