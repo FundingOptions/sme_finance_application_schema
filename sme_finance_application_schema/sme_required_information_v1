@@ -1,0 +1,62 @@
+{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "title":"SME Finance Application - Required Information",
+    "description":"The properties of an application for finance by a Small or Medium Enterprise (SME) which are required under the The Small and Medium Sized Business (Finance Platforms) Regulations 2015",
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+        "requested_amount",
+        "legal_status",
+        "months_revenue"
+    ],
+    "properties": {
+        "requested_amount": {
+            "title":"Requested amount",
+            "description":"The amount of finance requested, in GBP",
+            "type": "integer"
+        },
+        "finance_type_requested": {
+            "title":"Finance type requested",
+            "description":"The finance type requested by the SME, if specified",
+            "enum":[ "term_loan",
+                "overdraft",
+                "hire_purchase_or_lease",
+                "commercial_mortgage",
+                "business_credit_card",
+                "factoring_or_discounting",
+                "other_finance"
+            ]
+        },
+        "legal_status": {
+            "title":"Legal status",
+            "description":"The legal status of the SME",
+            "enum": [
+                "limited_company",
+                "limited_partnership",
+                "partnership_less_than_equal_to_3",
+                "partnership_greater_than_3",
+                "public_company",
+                "sole_trader",
+                "charity_limited_by_guarantee",
+                "other"
+                ]
+        },
+        "months_revenue": {
+            "title":"Months of revenue",
+            "description":"How long the SME has been receiving revenues, in months",
+            "type": "integer"
+        },
+        "date_finance_requested": {
+            "title":"When the finance was requested",
+            "description":"The date on which the finance was requested",
+            "type":"string",
+            "format": "date-time"
+        },
+        "date_finance_required": {
+            "title":"When the finance is required",
+            "description":"The date on which the finance is required",
+            "type":"string",
+            "format": "date-time"
+        }
+    }
+}

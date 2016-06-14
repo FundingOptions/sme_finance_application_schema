@@ -1,0 +1,19 @@
+{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "title":"SME Finance Application",
+    "description":"An application for finance by a Small or Medium Enterprise (SME)",
+    "additionalProperties": false,
+    "type": "object",
+    "required": ["required_information"],
+    "properties": {
+        "required_information": {
+            "$ref": "https://www.fundingoptions.com/schema/sme_required_information_v1#"
+        },
+        "recommended_information": {
+            "$ref": "https://www.fundingoptions.com/schema/sme_recommended_information_v1#"
+        },
+        "extra_information": {
+            "$ref": "https://www.fundingoptions.com/schema/sme_extra_information_v1#"
+        }
+    }
+}

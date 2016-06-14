@@ -1,0 +1,35 @@
+{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "title":"SME Finance Application - Recommended Information",
+    "description":"The properties of an application for finance by a Small or Medium Enterprise (SME) which are recommended by the Platforms participating in the referral scheme",
+    "additionalProperties": false,
+    "type": "object",
+    "properties": {
+        "revenue": {
+            "title":"Monthly revenue",
+            "description":"The average monthly revenue of the SME, in GBP",
+            "type": "integer"
+        },
+        "sic_code": {
+            "title":"Sector Industry Classification code",
+            "description":"The Sector Industry Classification (SIC) code for the SME, according to the 2007 SIC structure. Any level of SIC code is acceptable, from Section to Sub Class.",
+            "type":"string",
+            "pattern": "^([a-uA-U]|[0-9]{1,2}|[0-9]{1,2}\\.[0-9]{1,2}|[0-9]{1,2}\\.[0-9]{1,2}/[0-9])$"
+        },
+        "finance_term_length": {
+            "title":"Finance term length",
+            "description":"The term length required, in days",
+            "type": "integer"
+        },
+        "profitability": {
+            "title":"Profitability before tax",
+            "description":"The pre-tax profitability of the SME, expressed as a percentage",
+            "type": "integer"
+        },
+        "directors_houses": {
+            "title":"Directors' residential property",
+            "description":"The combined equity of the Directors' or other proprietors' residential property, net of any existing finance, in GBP",
+            "type": "integer"
+        }
+    }
+}
