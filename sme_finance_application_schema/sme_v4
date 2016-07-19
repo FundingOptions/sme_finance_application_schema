@@ -17,15 +17,19 @@
         },
         "finance_type_requested": {
             "title":"Finance type requested",
-            "description":"The finance type requested by the SME, if specified",
-            "enum":[ "term_loan",
+            "description":"The finance type(s) requested by the SME, if specified",
+            "type":"array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "enum":[
+                "term_loan",
                 "overdraft",
                 "hire_purchase_or_lease",
                 "commercial_mortgage",
                 "business_credit_card",
                 "factoring_or_discounting",
                 "other_finance"
-            ]
+            ]}
         },
         "legal_status": {
             "title":"Legal status",
