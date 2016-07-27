@@ -4,8 +4,10 @@
     "description":"Identifying information for use with an SME finance application. Note that the regulations specify the following information as required: a) the name of the small or medium sized business; b) the postal address, email address and telephone number of the business. However, guidance from HMT indicates that a referral can be valid if only one of these means of communication in b) is provided.",
     "additionalProperties": false,
     "type": "object",
-    "required": [
-        "sme_name"
+    "anyOf": [
+        {"required": ["sme_name","email"]},
+        {"required": ["sme_name","telephone"]},
+        {"required": ["sme_name","address_line_1","postcode"]}
     ],
     "properties": {
         "applicant_title": {
