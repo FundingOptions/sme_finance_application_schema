@@ -1054,6 +1054,11 @@
           "minimum":0,
           "type": "integer"
         },
+        "25001": {
+          "maximum":100,
+          "minimum":0,
+          "type": "integer"
+        },
         "50000": {
           "maximum":100,
           "minimum":0,
