@@ -1,0 +1,27 @@
+{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "title":"",
+    "description":"",
+    "additionalProperties": false,
+    "type": "object",
+    "required": ["address_line_1","postcode"],
+    "properties": {
+        "address_line_1": {
+            "title":"Address line 1",
+            "type": "string"
+        },
+        "postcode": {
+            "title":"Postcode",
+            "description":"The postal address of the applicant",
+            "type": "string"
+        },
+        "county": {
+            "title":"County",
+            "type": "string"
+        },
+        "city": {
+            "title":"City",
+            "type": "string"
+        }
+    }
+}
