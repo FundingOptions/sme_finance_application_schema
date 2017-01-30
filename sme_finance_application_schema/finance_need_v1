@@ -40,6 +40,11 @@
             "description":"The term length required, in days",
             "type": "integer"
         },
+        "guarantor_available": {
+            "title":"A guarantor is available for the finance",
+            "description":"The SME has a guarantor willing to guarantee the finance.",
+            "type": "boolean"
+        },
         "purpose": {
             "title":"Purpose",
             "description":"The purpose of the finance application",
