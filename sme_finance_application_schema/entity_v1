@@ -10,7 +10,7 @@
             "items": {
                 "type": "object",
                 "properties": {
-                    "person": {"$ref":"https://www.fundingoptions.com/schema/address_v1#"}
+                    "address": {"$ref":"https://www.fundingoptions.com/schema/address_v1#"}
                     "role": {
                         "type": "string",
                         "enum": ["trading", "registered"]
