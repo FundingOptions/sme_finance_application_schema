@@ -5,6 +5,19 @@
     "additionalProperties": false,
     "type": "object",
     "properties": {
+        "addresses": {
+            "type: "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "person": {"$ref":"https://www.fundingoptions.com/schema/address_v1#"}
+                    "role": {
+                        "type": "string",
+                        "enum": ["trading", "registered"]
+                    }
+                }
+            }
+        },
         "legal_status": {
             "title":"Legal status",
             "description":"The legal status of the SME",
