@@ -6,6 +6,9 @@
     "type": "object",
     "required": ["first_name","surname"],
     "properties": {
+        "date_of_birth": {
+            "type": "string"
+        },
         "title": {
             "type": "string"
         },
