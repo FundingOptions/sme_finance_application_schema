@@ -91,7 +91,7 @@
             "type":"integer"
         },
         "assets": {
-            "title": "Net business Assets",
+            "title": "Net business assets",
             "description": "The value of all assets owned by the SME, net of any existing finance, in GBP",
             "type": "integer"
         },
