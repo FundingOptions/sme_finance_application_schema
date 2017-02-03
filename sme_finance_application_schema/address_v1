@@ -19,7 +19,6 @@
             "type": "string"
         },
         "postcode": {
-            "title":"Postcode",
             "type": "string"
         }
     }
