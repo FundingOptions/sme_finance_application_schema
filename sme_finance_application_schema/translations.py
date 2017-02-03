@@ -1,8 +1,9 @@
 def sme_v5_and_contact_v3_to_finance_application_v3_translator(sme, sme_contact):
     applicant = {'first_name':sme_contact.get('applicant_first_name', ''),
-                 'phone_number': sme_contact.get('phone_number'),
                  'surname': sme_contact.get('applicant_surname', '')
                  }
+    if 'phone_number' in sme_contact:
+        applicant['phone_number'] = sme_contact['phone_number']
     requesting_entity = {"name":sme_contact['sme_name']}
     for field in ('legal_status', 'months_revenue', 'trade_credit', 'revenue', 'sic_code'):
         if field in sme:
