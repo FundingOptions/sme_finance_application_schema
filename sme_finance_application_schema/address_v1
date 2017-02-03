@@ -7,20 +7,19 @@
     "required": ["address_line_1","postcode"],
     "properties": {
         "address_line_1": {
-            "title":"Address line 1",
+            "title":"Building number and street name",
             "type": "string"
         },
         "postcode": {
-            "title":"Postcode",
-            "description":"The postal address of the applicant",
             "type": "string"
         },
-        "county": {
-            "title":"County",
+        "locality": {
+            "type": "string"
+        },
+        "town": {
             "type": "string"
         },
         "city": {
-            "title":"City",
             "type": "string"
         }
     }
