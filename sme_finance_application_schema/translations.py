@@ -60,19 +60,17 @@ def sme_v5_to_finance_need_v1_translator(sme):
 
 def sme_contact_v3_to_address_v1_translator(sme_contact):
     address = {
-        'building_number_and_street_name': sme_contact.get('address_line_1'),
-        'postcode': sme_contact.get('postcode')
+        'building_number_and_street_name': sme_contact.get('address_line_1') or '',
+        'postcode': sme_contact.get('postcode') or ''
     }
-    return _strip_dictionary(address, required_fields=(
-        'building_number_and_street_name', 'postcode'
-    ))
+    return _strip_dictionary(address)
 
 
 def sme_contact_v3_to_person_v1_translator(sme_contact):
     person = {
         'title': sme_contact.get('applicant_title'),
-        'first_name': sme_contact.get('applicant_first_name'),
-        'surname': sme_contact.get('applicant_surname'),
+        'first_name': sme_contact.get('applicant_first_name') or '',
+        'surname': sme_contact.get('applicant_surname') or '',
         'email': sme_contact.get('email'),
         'telephone': sme_contact.get('telephone')
     }
@@ -80,14 +78,12 @@ def sme_contact_v3_to_person_v1_translator(sme_contact):
     if address:
         person['addresses'] = [{'address': address}]
 
-    return _strip_dictionary(person, required_fields=(
-        'first_name', 'surname'
-    ))
+    return _strip_dictionary(person)
 
 
-def _strip_dictionary(dictionary, required_fields=()):
-    """Remove key value pairs from dictionary where the value is empty"""
+def _strip_dictionary(dictionary):
+    """Remove key value pairs from dictionary where the value is null"""
     return dict(
         (key, value) for key, value in dictionary.items()
-        if value is None or key in required_fields
+        if value is not None
     )
