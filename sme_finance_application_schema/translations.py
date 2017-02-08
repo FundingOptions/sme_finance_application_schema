@@ -75,7 +75,7 @@ def sme_contact_v3_to_person_v1_translator(sme_contact):
         'telephone': sme_contact.get('telephone')
     }
     address = sme_contact_v3_to_address_v1_translator(sme_contact)
-    if address:
+    if _dictionary_has_populated_values(address):
         person['addresses'] = [{'address': address}]
 
     return _strip_dictionary(person)
@@ -87,3 +87,7 @@ def _strip_dictionary(dictionary):
         (key, value) for key, value in dictionary.items()
         if value is not None
     )
+
+
+def _dictionary_has_populated_values(dictionary):
+    return any(value for value in dictionary.values())
