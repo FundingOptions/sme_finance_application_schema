@@ -48,7 +48,7 @@
         },
         "activities": {
             "description":"Free text. Activities the company performs",
-            "type":"string",
+            "type":"string"
         },
         "sic_code": {
             "title":"Sector Industry Classification code",
