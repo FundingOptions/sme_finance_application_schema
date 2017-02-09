@@ -20,8 +20,8 @@
                     "value_of_property": {
                         "type":"integer",
                         "description": "Assets that the Director is willing/able to use to guarantee"
-                    }
-                    "person": {"$ref":"https://www.fundingoptions.com/schema/person_v1#"}
+                    },
+                    "person": {"$ref":"https://www.fundingoptions.com/schema/person_v1#"},
                     "role": { 
                         "type": "string",
                         "enum": ["guarantor", "director"]
