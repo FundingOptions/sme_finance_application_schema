@@ -8,7 +8,7 @@
         "deposit": {
             "type": "integer"
         },
-        "free_text": {
+        "free_form": {
             "type": "string",
         },
         "requested_amount": {
