@@ -8,9 +8,8 @@
         "deposit": {
             "type": "integer"
         },
-        "expectations": {
+        "free_text": {
             "type": "string",
-            "description": "Free text SME description of what they expect or need"
         },
         "requested_amount": {
             "title":"Requested amount",

@@ -46,8 +46,7 @@
             "description":"The average monthly revenue of the SME, in GBP",
             "type": "integer"
         },
-        "activities": {
-            "description":"Free text. Activities the company performs",
+        "free_text": {
             "type":"string"
         },
         "sic_code": {
