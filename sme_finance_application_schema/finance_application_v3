@@ -17,6 +17,7 @@
             "items": {
                 "type": "object",
                 "properties": {
+                    "value_of_property": "integer",
                     "person": {"$ref":"https://www.fundingoptions.com/schema/person_v1#"}
                     "role": { 
                         "type": "string",
