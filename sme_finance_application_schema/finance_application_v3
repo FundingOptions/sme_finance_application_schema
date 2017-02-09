@@ -17,9 +17,9 @@
             "items": {
                 "type": "object",
                 "properties": {
-                    "value_of_property": {
+                    "value_of_personal_assets": {
                         "type":"integer",
-                        "description": "Assets that the Director is willing/able to use to guarantee"
+                        "description": "The net value of the assets that the person is willing/able to use as a guarantee"
                     },
                     "person": {"$ref":"https://www.fundingoptions.com/schema/person_v1#"},
                     "role": { 
