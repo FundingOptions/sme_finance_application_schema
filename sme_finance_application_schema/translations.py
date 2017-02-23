@@ -63,6 +63,8 @@ def sme_contact_v3_to_address_v1_translator(sme_contact):
         'building_number_and_street_name': sme_contact.get('address_line_1') or '',
         'postcode': sme_contact.get('postcode') or ''
     }
+    if 'city' in sme_contact:
+        address['post_town'] = sme_contact['city']
     return _strip_dictionary(address)
 
 
