@@ -1,3 +1,28 @@
+def finance_application_v3_to_sme_contact_v3(finance_application):
+    applicant = finance_application['applicant']
+    requesting_entity = finance_application['requesting_entity']
+    sme_contact_v3 = {
+        'sme_name': requesting_entity['name'],
+        'applicant_surname': applicant['surname']
+    }
+    if applicant.get('first_name'):
+        sme_contact_v3['applicant_first_name'] = applicant['first_name']
+    if 'title' in applicant:
+        sme_contact_v3['applicant_title'] = applicant['title']
+    if 'email' in applicant:
+        sme_contact_v3['email'] = applicant['email']
+    if 'telephone' in applicant:
+        sme_contact_v3['telephone'] = applicant['telephone']
+    if applicant.get('addresses'):
+        if len(applicant['addresses']) != 1:
+            raise Exception
+        address = applicant['addresses'][-1]['address']
+        sme_contact_v3['address_line_1'] = address['building_number_and_street_name']
+        sme_contact_v3['postcode'] = address['postcode']
+        if 'post_town' in address:
+            sme_contact_v3['city'] = address['post_town']
+    return sme_contact_v3
+
 def finance_application_v3_to_sme_v5(finance_application):
     sme_v5 = {}
     for field in ('legal_status', 'months_revenue', 'revenue',
