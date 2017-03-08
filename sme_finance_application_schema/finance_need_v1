@@ -4,6 +4,7 @@
     "description":"",
     "additionalProperties": false,
     "type": "object",
+    "required": ["requested_amount"],
     "properties": {
         "deposit": {
             "type": "integer"
