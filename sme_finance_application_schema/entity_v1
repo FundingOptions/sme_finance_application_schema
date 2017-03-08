@@ -5,6 +5,7 @@
     "description":"",
     "additionalProperties": false,
     "type": "object",
+    "required": [ "name" ],
     "definitions":
     {
         "address_v1": {
