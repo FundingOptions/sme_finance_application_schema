@@ -85,9 +85,8 @@
         },
         "overseas_revenue": {
             "title":"Overseas revenue",
-            "description":"The proportion of revenue the SME receives from sales outside the United Kingdom, expressed as a percentage",
+            "description":"The monthly revenue the SME receives from sales outside the United Kingdom, in GBP",
             "type": "integer",
-            "maximum":100,
             "minimum":0
         },
         "exports": {
