@@ -113,6 +113,11 @@
             "maximum":100,
             "minimum":0
         },
+        "outstanding_invoices": {
+            "title":"Value of outstanding Invoices",
+            "description":"Value of outstanding invoices, in GBP",
+            "type": "integer"
+        },
         "up_to_date_accounts": {
             "title":"Up to date accounts available",
             "description":"Statutory or management accounts fewer than two months old are available",
