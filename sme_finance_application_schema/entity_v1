@@ -112,11 +112,6 @@
             "maximum":100,
             "minimum":0
         },
-        "directors_pensions": {
-            "title":"Directors' pensions",
-            "description":"The combined value of the Directors' or other proprietors' pensions, in GBP",
-            "type": "integer"
-        },
         "up_to_date_accounts": {
             "title":"Up to date accounts available",
             "description":"Statutory or management accounts fewer than two months old are available",
@@ -215,17 +210,6 @@
                 "UKZ"
             ]
         },
-        "personal_credit_ratings": {
-            "title":"Directors' personal credit ratings",
-            "description":"The personal credit ratings of the Directors. If there is more than one Director, the lowest credit rating should be provided. Equifax and Experian scores map directly to these values (Experian 'Fair' maps to 'ok'), for CallCredit scores map 'Poor' as 'very_poor', 'Fair' as 'poor', 'Good' as 'ok', 'Very good' as 'good' and 'Excellent' as 'excellent'.",
-            "enum":[
-                "very_poor",
-                "poor",
-                "ok",
-                "good",
-                "excellent"
-            ]
-        },
         "company_credit_rating": {
             "title":"Credit rating of the SME itself, not its Directors.",
             "description":"The credit ratings of the Company.",
@@ -235,15 +219,6 @@
                 "ok",
                 "good",
                 "excellent"
-            ]
-        },
-        "familiarity_with_financing": {
-            "title": "Familiarity with Business Finance",
-            "description": "Level of experience with business finance",
-            "enum": [
-                "first_time",
-                "had_finance_before",
-                "expert"
             ]
         },
         "accounting_software": {
