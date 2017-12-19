@@ -86,9 +86,14 @@
             "type": "integer"
         },
         "business_assets": {
-            "title":"Business assets",
-            "description":"The value of any assets owned by the SME, net of any existing finance, in GBP",
+            "title":"Net physical business assets",
+            "description":"The value of any physical assets owned by the SME, net of any existing finance, in GBP",
             "type":"integer"
+        },
+        "assets": {
+            "title": "Net business assets",
+            "description": "The value of all assets owned by the SME, net of any existing finance, in GBP",
+            "type": "integer"
         },
         "purpose": {
             "title":"Purpose",
