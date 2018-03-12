@@ -20,8 +20,8 @@
         "finance_need": {
             "$ref": "finance_need_v1"
         },
-        "actor_rollup": {
-            "$ref": "actor_rollup_v1"
+        "aggregated_actors": {
+            "$ref": "aggregated_actors_v1"
         }
     }
 }

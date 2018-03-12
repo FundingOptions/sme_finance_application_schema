@@ -85,16 +85,16 @@ def finance_application_v3_to_sme_v5(finance_application):
                 )
                 sme_v5['personal_credit_ratings'] = min_credit_rating
 
-    # Actor rollup only used if no actor information available
-    rollup = finance_application.get('actor_rollup', {})
-    if rollup.get('sum_value_of_property_equity') and 'directors_houses' not in sme_v5:
-        sme_v5['directors_houses'] = rollup.get('sum_value_of_property_equity')
-    if rollup.get('sum_value_of_pension') and 'directors_pensions' not in sme_v5:
-        sme_v5['directors_pensions'] = rollup.get('sum_value_of_pension')
-    if rollup.get('max_familiarity_with_financing') and 'familiarity_with_financing' not in sme_v5:
-        sme_v5['familiarity_with_financing'] = rollup.get('max_familiarity_with_financing')
-    if rollup.get('min_personal_credit_rating') and 'personal_credit_ratings' not in sme_v5:
-        sme_v5['personal_credit_ratings'] = rollup.get('min_personal_credit_rating')
+    # Aggregated actors only used if no actor information available
+    aggregated = finance_application.get('aggregated_actors', {})
+    if aggregated.get('sum_value_of_property_equity') and 'directors_houses' not in sme_v5:
+        sme_v5['directors_houses'] = aggregated.get('sum_value_of_property_equity')
+    if aggregated.get('sum_value_of_pension') and 'directors_pensions' not in sme_v5:
+        sme_v5['directors_pensions'] = aggregated.get('sum_value_of_pension')
+    if aggregated.get('max_familiarity_with_financing') and 'familiarity_with_financing' not in sme_v5:
+        sme_v5['familiarity_with_financing'] = aggregated.get('max_familiarity_with_financing')
+    if aggregated.get('min_personal_credit_rating') and 'personal_credit_ratings' not in sme_v5:
+        sme_v5['personal_credit_ratings'] = aggregated.get('min_personal_credit_rating')
 
     return sme_v5
 
@@ -103,13 +103,13 @@ def sme_v5_and_contact_v3_to_finance_application_v3_translator(sme, sme_contact)
     applicant = sme_contact_v3_to_person_v1_translator(sme_contact)
     requesting_entity = sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact)
     finance_need = sme_v5_to_finance_need_v1_translator(sme)
-    actor_rollup = sme_v5_to_actor_rollup_v1_translator(sme)
-    return {
+    aggregated_actors = sme_v5_to_aggregated_actors_v1_translator(sme)
+    return _remove_key_if_value_is_none({
         'applicant': applicant,
         'requesting_entity': requesting_entity,
         'finance_need': finance_need,
-        'actor_rollup': actor_rollup,
-    }
+        'aggregated_actors': aggregated_actors,
+    })
 
 
 def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
@@ -163,15 +163,15 @@ def sme_v5_to_finance_need_v1_translator(sme):
     return _remove_key_if_value_is_none(finance_need)
 
 
-def sme_v5_to_actor_rollup_v1_translator(sme):
-    actor_rollup = {
+def sme_v5_to_aggregated_actors_v1_translator(sme):
+    aggregated_actors = {
         'sum_value_of_personal_assets': sme.get('directors_houses'),
         'sum_value_of_property_equity': sme.get('directors_houses'),
         'sum_value_of_pension': sme.get('directors_pensions'),
         'max_familiarity_with_financing': sme.get('familiarity_with_financing'),
         'min_personal_credit_rating': sme.get('personal_credit_ratings'),
     }
-    return _remove_key_if_value_is_none(actor_rollup)
+    return _remove_key_if_value_is_none(aggregated_actors) or None
 
 
 def sme_contact_v3_to_address_v1_translator(sme_contact):

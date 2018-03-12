@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://www.fundingoptions.com/schema/actor_rollup_v1",
-    "title": "Actor Rollup",
-    "description": "This contains rolled up information about certain Actors (Directors and Guarantors) on the Finance Application, allowing easier transmission of aggregate and/or anonymised information. It is indended that information contained in this object is always superceded by information contained in the Actors array, if available.",
+    "id": "https://www.fundingoptions.com/schema/aggregated_actors_v1",
+    "title": "Aggregated Actors",
+    "description": "This contains aggregated information about certain Actors (Directors and Guarantors) on the Finance Application, allowing easier transmission of aggregate and/or anonymised information. It is intended that information contained in this object is always superseded by information contained in the Actors array, if available.",
     "additionalProperties": false,
     "type": "object",
     "properties": {
