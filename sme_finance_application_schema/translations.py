@@ -108,7 +108,7 @@ def sme_v5_and_contact_v3_to_finance_application_v3_translator(sme, sme_contact)
         'applicant': applicant,
         'requesting_entity': requesting_entity,
         'finance_need': finance_need,
-        'aggregated_actors': aggregated_actors,
+        'aggregated_actors': aggregated_actors or None,
     })
 
 
@@ -171,7 +171,7 @@ def sme_v5_to_aggregated_actors_v1_translator(sme):
         'max_familiarity_with_financing': sme.get('familiarity_with_financing'),
         'min_personal_credit_rating': sme.get('personal_credit_ratings'),
     }
-    return _remove_key_if_value_is_none(aggregated_actors) or None
+    return _remove_key_if_value_is_none(aggregated_actors)
 
 
 def sme_contact_v3_to_address_v1_translator(sme_contact):
