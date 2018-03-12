@@ -1,9 +1,9 @@
 def finance_application_v3_to_sme_contact_v3(finance_application):
-    applicant = finance_application.get('applicant', {})
-    requesting_entity = finance_application.get('requesting_entity', {})
+    applicant = finance_application['applicant']
+    requesting_entity = finance_application['requesting_entity']
     sme_contact_v3 = {
-        'sme_name': requesting_entity.get('name'),
-        'applicant_surname': applicant.get('surname'),
+        'sme_name': requesting_entity['name'],
+        'applicant_surname': applicant['surname'],
         'applicant_first_name': applicant.get('first_name') or None,  # disallow blank values
         'applicant_title': applicant.get('title'),
         'email': applicant.get('email'),
@@ -105,10 +105,10 @@ def sme_v5_and_contact_v3_to_finance_application_v3_translator(sme, sme_contact)
     finance_need = sme_v5_to_finance_need_v1_translator(sme)
     aggregated_actors = sme_v5_to_aggregated_actors_v1_translator(sme)
     return _remove_key_if_value_is_none({
-        'applicant': applicant or None,
-        'requesting_entity': requesting_entity or None,
-        'finance_need': finance_need or None,
-        'aggregated_actors': aggregated_actors or None,
+        'applicant': applicant,
+        'requesting_entity': requesting_entity,
+        'finance_need': finance_need,
+        'aggregated_actors': aggregated_actors,
     })
 
 
@@ -171,13 +171,13 @@ def sme_v5_to_aggregated_actors_v1_translator(sme):
         'max_familiarity_with_financing': sme.get('familiarity_with_financing'),
         'min_personal_credit_rating': sme.get('personal_credit_ratings'),
     }
-    return _remove_key_if_value_is_none(aggregated_actors)
+    return _remove_key_if_value_is_none(aggregated_actors) or None
 
 
 def sme_contact_v3_to_address_v1_translator(sme_contact):
     address = {
-        'building_number_and_street_name': sme_contact.get('address_line_1'),
-        'postcode': sme_contact.get('postcode'),
+        'building_number_and_street_name': sme_contact.get('address_line_1') or '',
+        'postcode': sme_contact.get('postcode') or '',
         'post_town': sme_contact.get('city'),
         'locality_name': sme_contact.get('address_line_2'),
     }
@@ -187,8 +187,8 @@ def sme_contact_v3_to_address_v1_translator(sme_contact):
 def sme_contact_v3_to_person_v1_translator(sme_contact):
     person = {
         'title': sme_contact.get('applicant_title'),
-        'first_name': sme_contact.get('applicant_first_name'),
-        'surname': sme_contact.get('applicant_surname'),
+        'first_name': sme_contact.get('applicant_first_name') or '',
+        'surname': sme_contact.get('applicant_surname') or '',
         'email': sme_contact.get('email'),
         'telephone': sme_contact.get('telephone')
     }
