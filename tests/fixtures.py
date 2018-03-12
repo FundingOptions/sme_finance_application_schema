@@ -177,7 +177,7 @@ ACTOR_V1_GUARANTOR = {
     'person': PERSON_V1,
 }
 
-ACTOR_ROLLUP_V1 = {
+AGGREGATED_ACTORS_V1 = {
     'sum_value_of_personal_assets': 60000,
     'sum_outstanding_mortgage_on_property': 60000,
     'sum_value_of_property_equity': 60000,
@@ -187,7 +187,7 @@ ACTOR_ROLLUP_V1 = {
     'min_personal_credit_rating': 'very_poor',
 }
 
-ACTOR_ROLLUP_V1_INCOMPLETE = {
+AGGREGATED_ACTORS_V1_INCOMPLETE = {
     'sum_value_of_property_equity': 10000,
     'sum_value_of_pension': 1000000,
     'max_familiarity_with_financing': 'ok',
@@ -199,10 +199,10 @@ FINANCE_APPLICATION_V3 = {
     'finance_need': FINANCE_NEED_V1,
     'requesting_entity': ENTITY_V1,
     'actors': [ACTOR_V1_DIRECTOR_1, ACTOR_V1_DIRECTOR_2, ACTOR_V1_GUARANTOR],
-    'actor_rollup': ACTOR_ROLLUP_V1,
+    'aggregated_actors': AGGREGATED_ACTORS_V1,
 }
 
-FINANCE_APPLICATION_V3_ROLLUP_INCOMPLETE = copy.deepcopy(FINANCE_APPLICATION_V3)
-for actor in FINANCE_APPLICATION_V3_ROLLUP_INCOMPLETE['actors']:
+FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE = copy.deepcopy(FINANCE_APPLICATION_V3)
+for actor in FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE['actors']:
     actor.pop('familiarity_with_financing')
-FINANCE_APPLICATION_V3_ROLLUP_INCOMPLETE['actor_rollup'] = ACTOR_ROLLUP_V1_INCOMPLETE
+FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE['aggregated_actors'] = AGGREGATED_ACTORS_V1_INCOMPLETE
