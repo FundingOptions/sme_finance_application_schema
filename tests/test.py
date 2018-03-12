@@ -5,6 +5,7 @@ from pkg_resources import resource_string, resource_listdir, resource_isdir
 import re
 from unittest import TestCase
 
+
 from .fixtures import (
     SME_V5,
     SME_CONTACT_V3,
