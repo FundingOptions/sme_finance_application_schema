@@ -23,6 +23,11 @@ from sme_finance_application_schema.translations import (
     sme_v5_and_contact_v3_to_finance_application_v3_translator,
     finance_application_v3_to_sme_v5,
     finance_application_v3_to_sme_contact_v3,
+    sme_v5_and_contact_v3_to_requesting_entity_v1_translator,
+    sme_v5_to_finance_need_v1_translator,
+    sme_v5_to_aggregated_actors_v1_translator,
+    sme_contact_v3_to_address_v1_translator,
+    sme_contact_v3_to_person_v1_translator,
 )
 
 
@@ -188,3 +193,28 @@ class TestTranslations(TestCase):
 
         translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(FINANCE_APPLICATION_V3)
         self.assertDictEqual(translated_sme_contact_v3, expected_sme_contact_v3)
+
+    def test_empty_objects_produce_empty_objects(self):
+        single_arg_translators = (
+            finance_application_v3_to_sme_contact_v3,
+            finance_application_v3_to_sme_v5,
+            sme_v5_to_finance_need_v1_translator,
+            sme_v5_to_aggregated_actors_v1_translator,
+            sme_contact_v3_to_address_v1_translator,
+            sme_contact_v3_to_person_v1_translator,
+
+        )
+        two_arg_translators = (
+            sme_v5_and_contact_v3_to_finance_application_v3_translator,
+            sme_v5_and_contact_v3_to_requesting_entity_v1_translator,
+        )
+
+        for translator in single_arg_translators:
+            with self.subTest(translator=translator):
+                translated = translator({})
+                self.assertDictEqual(translated, {})
+
+        for translator in two_arg_translators:
+            with self.subTest(translator=translator):
+                translated = translator({}, {})
+                self.assertDictEqual(translated, {})
