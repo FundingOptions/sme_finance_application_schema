@@ -1,12 +1,12 @@
 # sme_finance_application_schema
 
-https://travis-ci.org/FundingOptions/sme-finance-application-schema.svg?branch=master
+![Travis CI](https://travis-ci.org/FundingOptions/sme-finance-application-schema.svg?branch=master)
 
 ## Dislaimer
 These schema are released to:
 * Allow Funding Options to communicate with Partners (including Lenders)
 * Facilitate industry implementation of the Government referral scheme
-We actively welcome queries, feedback and suggestions from any interested parties, which can be provided via [our GitHub repository](https://github.com/FundingOptions/sme-finance-application-schema) or to info@fundingoptions.com.
+We actively welcome queries, feedback and suggestions from any interested parties, which can be provided via [our GitHub repository](https://github.com/FundingOptions/sme-finance-application-schema) or techsupport@fundingoptions.com.
 They are not in any way intended to be construed as authoritative or official, and are provided without commitment or warranty.
 
 ## Overview
@@ -17,7 +17,7 @@ As at March 2018 there are two schema in use by Funding Options:
 * finance_application_v3 - this is the current schema in use by Funding Options for communicating with Partners excepting banks Referring to Funding Options under the Bank Referral Scheme. This references multiple child schema.
 * finance_application_v2 - this is in use by the Bank Referral Scheme and was frozen in 2016-08 prior to scheme launch. This references two child schema, sme_v4 and sme_contact_v3.
 
-##Use outside the Bank Referral Scheme
+## Use outside the Bank Referral Scheme
 As at March 2018, finance_application_v3 is the current schema for use by Partners of Funding Options outside the Bank Referral Scheme. finance_application_v3 references several child schema:
 * person_v1
 * actor_v1
@@ -26,7 +26,7 @@ As at March 2018, finance_application_v3 is the current schema for use by Partne
 * aggregated_actors_v1
 * address_v1
 
-##Use inside the Bank Referral Scheme
+## Use inside the Bank Referral Scheme
 finance_application_v2 was the schema adopted by the Bank Referral Scheme in 2016 prior to scheme launch. It has not changed since. The relevant release of the schema repository is v1.7.
 
 finance_application_v2 references two child schema:
