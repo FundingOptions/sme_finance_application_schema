@@ -6,7 +6,9 @@
 These schema are released to:
 * Allow Funding Options to communicate with Partners (including Lenders)
 * Facilitate industry implementation of the Government referral scheme
+
 We actively welcome queries, feedback and suggestions from any interested parties, which can be provided via [our GitHub repository](https://github.com/FundingOptions/sme-finance-application-schema) or techsupport@fundingoptions.com.
+
 They are not in any way intended to be construed as authoritative or official, and are provided without commitment or warranty.
 
 ## Overview
@@ -58,4 +60,4 @@ Non-breaking changes will be added to the most recent version of the schema. Bre
 ## Schema detail
 The schema themselves are written in JSON, according to [JSON schema v4](http://json-schema.org/). It is therefore easy to use the schema to construct JSON objects. The schema contain sufficient information to begin designing compatible XML documents (following conversion to Document Type Definitions), CSV files or similar.
 
-Please visit [our Github repository](https://github.com/FundingOptions/sme-finance-application-schema) for more details. Note that the repository contains all prior schema versions - if you have any problems navigating it, please contact us.
+Please visit [our Github repository](https://github.com/FundingOptions/sme-finance-application-schema) for more details.
