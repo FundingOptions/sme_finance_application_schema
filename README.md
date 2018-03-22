@@ -2,7 +2,7 @@
 
 ![Travis CI](https://travis-ci.org/FundingOptions/sme-finance-application-schema.svg?branch=master)
 
-## Dislaimer
+## Disclaimer
 These schema are released to:
 * Allow Funding Options to communicate with Partners (including Lenders)
 * Facilitate industry implementation of the Government referral scheme
