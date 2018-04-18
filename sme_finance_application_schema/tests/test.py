@@ -30,6 +30,7 @@ from sme_finance_application_schema.translations import (
     finance_application_v3_to_sme_v5,
     finance_application_v3_to_sme_contact_v3,
     sme_v3_and_contact_v2_to_finance_application_v3_translator,
+    sme_contact_v2_to_person_v1_translator,
 )
 
 
@@ -317,3 +318,14 @@ class TestTranslations(TestCase):
                 expected_finance_application_v3['requesting_entity']['legal_status'] = new_value
                 translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_incorrect_legal_status, SME_CONTACT_V2)
                 self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+
+
+    def test_sme_contact_v2_to_person_v1_translator(self):
+        sme_contact_v2_with_normal_phone_number = copy.deepcopy(SME_CONTACT_V2)
+        sme_contact_v2_with_normal_phone_number['telephone'] = '07445387241'
+        person_v1 = sme_contact_v2_to_person_v1_translator(sme_contact_v2_with_normal_phone_number)
+        expected_person_v1 = copy.deepcopy(PERSON_V1)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
+            expected_person_v1.pop(field)
+        expected_person_v1['telephone'] = '7445387241'
+        self.assertDictEqual(person_v1, expected_person_v1)

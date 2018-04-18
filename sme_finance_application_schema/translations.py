@@ -1,3 +1,5 @@
+import re
+
 def finance_application_v3_to_sme_contact_v3(finance_application):
     applicant = finance_application['applicant']
     requesting_entity = finance_application['requesting_entity']
@@ -167,7 +169,7 @@ def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, b
         requesting_entity.pop('card_revenue')
 
     # sme_v3 doesnt have a limit on months_revenue, entity_v1 does
-    if int(requesting_entity['months_revenue']) > 1800:
+    if int(requesting_entity.get('months_revenue', 0)) > 1800:
         requesting_entity['months_revenue'] = 1800
 
     # sme_v3 has an error in the partnership sizes
@@ -273,6 +275,11 @@ def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_proper
 
     if backfill_required_properties:
         person = _backfill_required_properties(person, {'first_name': 'Unknown', 'surname': 'Unknown'})
+
+    telephone = person.get('telephone')
+    if 'telephone':
+        # Generally, correction to E.164 involves dropping the leading zeros
+        person['telephone'] = re.sub('^0+', '', telephone)
 
     return person
 
