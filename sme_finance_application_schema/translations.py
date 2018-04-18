@@ -113,7 +113,20 @@ def sme_v5_and_contact_v3_to_finance_application_v3_translator(sme, sme_contact)
     })
 
 
-def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
+def sme_v3_and_contact_v2_to_finance_application_v3_translator(sme, sme_contact, backfill_required_properties=False):
+    applicant = sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_properties=backfill_required_properties)
+    requesting_entity = sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, backfill_required_properties=backfill_required_properties)
+    finance_need = sme_v3_to_finance_need_v1_translator(sme, backfill_required_properties=backfill_required_properties)
+    aggregated_actors = sme_v3_to_aggregated_actors_v1_translator(sme)
+    return _remove_key_if_value_is_none({
+        'applicant': applicant,
+        'requesting_entity': requesting_entity,
+        'finance_need': finance_need,
+        'aggregated_actors': aggregated_actors or None,
+    })
+
+
+def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, backfill_required_properties=False):
     requesting_entity = {
         'name': sme_contact.get('sme_name'),
         'company_number': sme_contact.get('company_number'),
@@ -124,9 +137,6 @@ def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
         'profitability': sme.get('profitability'),
         'business_assets': sme.get('business_assets'),
         'overseas_revenue': sme.get('overseas_revenue'),
-        'exports': sme.get('exports'),
-        'stock_imports': sme.get('stock_imports'),
-        'purchase_orders': sme.get('purchase_orders'),
         'up_to_date_accounts': sme.get('up_to_date_accounts'),
         'financial_forecast': sme.get('financial_forecast'),
         'business_plan': sme.get('business_plan'),
@@ -141,6 +151,32 @@ def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
         'registered_brand': sme.get('registered_brand'),
         'customers': sme.get('customers'),
         'region': sme.get('region'),
+    }
+    requesting_entity = _remove_key_if_value_is_none(requesting_entity)
+    if backfill_required_properties:
+        requesting_entity = _backfill_required_properties(requesting_entity, ['name'])
+
+    # sme_v3 expresses card_revenue as a percentage, entity_v1 as a value
+    card_revenue_as_percentage = requesting_entity.get('card_revenue')
+    revenue = requesting_entity.get('revenue')
+    if card_revenue_as_percentage and revenue:
+        card_revenue_as_value = round(revenue*(card_revenue_as_percentage/100))
+        requesting_entity['card_revenue'] = card_revenue_as_value
+    elif card_revenue_as_percentage:
+        # If we can't work it out, discard it
+        requesting_entity.pop('card_revenue')
+
+    return requesting_entity
+
+
+def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
+    # sme_v5 has additional properties to v3
+    # sme_contact_v3 has different requirements to v2
+    requesting_entity = sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact)
+    additional_data_from_sme_v5 = {
+        'exports': sme.get('exports'),
+        'stock_imports': sme.get('stock_imports'),
+        'purchase_orders': sme.get('purchase_orders'),
         'company_credit_rating': sme.get('company_credit_rating'),
         'accounting_software': sme.get('accounting_software'),
         'total_value_of_unsatisfied_ccjs': sme.get('total_value_of_unsatisfied_ccjs'),
@@ -149,31 +185,55 @@ def sme_v5_and_contact_v3_to_requesting_entity_v1_translator(sme, sme_contact):
         'sets_of_filed_accounts': sme.get('sets_of_filed_accounts'),
         'count_of_all_ccjs': sme.get('count_of_all_ccjs'),
         'count_of_unsatisfied_ccjs': sme.get('count_of_unsatisfied_ccjs'),
+        # Overwrite the card revenue provided by the sme_v3 translator since sme_v5 provides as a value
+        'card_revenue': sme.get('card_revenue'),
     }
+    requesting_entity.update(additional_data_from_sme_v5)
     return _remove_key_if_value_is_none(requesting_entity)
 
 
-def sme_v5_to_finance_need_v1_translator(sme):
+def sme_v3_to_finance_need_v1_translator(sme, backfill_required_properties=False):
     finance_need = {
         'requested_amount': sme.get('requested_amount'),
         'finance_type_requested': sme.get('finance_type_requested'),
         'date_finance_required': sme.get('date_finance_required'),
         'date_finance_requested': sme.get('date_finance_requested'),
         'finance_term_length': sme.get('finance_term_length'),
-        'guarantor_available': sme.get('guarantor_available'),
         'purpose': sme.get('purpose'),
     }
+    finance_need = _remove_key_if_value_is_none(finance_need)
+    if backfill_required_properties:
+        finance_need = _backfill_required_properties(finance_need, ['requested_amount'], backfill_value=0)
+    return finance_need
+
+
+def sme_v5_to_finance_need_v1_translator(sme):
+    # sme_v5 has additional properties to v3
+    finance_need = sme_v3_to_finance_need_v1_translator(sme)
+    additional_data_from_sme_v5 = {
+        'guarantor_available': sme.get('guarantor_available'),
+    }
+    finance_need.update(additional_data_from_sme_v5)
     return _remove_key_if_value_is_none(finance_need)
 
 
-def sme_v5_to_aggregated_actors_v1_translator(sme):
+def sme_v3_to_aggregated_actors_v1_translator(sme):
     aggregated_actors = {
         'sum_value_of_personal_assets': sme.get('directors_houses'),
         'sum_value_of_property_equity': sme.get('directors_houses'),
         'sum_value_of_pension': sme.get('directors_pensions'),
+    }
+    return _remove_key_if_value_is_none(aggregated_actors)
+
+
+def sme_v5_to_aggregated_actors_v1_translator(sme):
+    # sme_v5 has additional properties to v3
+    aggregated_actors = sme_v3_to_aggregated_actors_v1_translator(sme)
+    additional_data_from_sme_v5 = {
         'max_familiarity_with_financing': sme.get('familiarity_with_financing'),
         'min_personal_credit_rating': sme.get('personal_credit_ratings'),
     }
+    aggregated_actors.update(additional_data_from_sme_v5)
     return _remove_key_if_value_is_none(aggregated_actors)
 
 
@@ -187,7 +247,7 @@ def sme_contact_v3_to_address_v1_translator(sme_contact):
     return _remove_key_if_value_is_none(address)
 
 
-def sme_contact_v3_to_person_v1_translator(sme_contact):
+def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_properties=False):
     person = {
         'title': sme_contact.get('applicant_title'),
         'first_name': sme_contact.get('applicant_first_name'),
@@ -199,7 +259,17 @@ def sme_contact_v3_to_person_v1_translator(sme_contact):
     if _dictionary_has_populated_values(address):
         person['addresses'] = [{'address': address}]
 
-    return _remove_key_if_value_is_none(person)
+    person = _remove_key_if_value_is_none(person)
+
+    if backfill_required_properties:
+        person = _backfill_required_properties(person, ['first_name', 'surname'])
+
+    return person
+
+
+def sme_contact_v3_to_person_v1_translator(sme_contact):
+    # The only difference between sme_contact_v2 and v3 is the requirements
+    return sme_contact_v2_to_person_v1_translator(sme_contact)
 
 
 def _remove_key_if_value_is_none(dictionary):
@@ -207,6 +277,13 @@ def _remove_key_if_value_is_none(dictionary):
         (key, value) for key, value in dictionary.items()
         if value is not None
     )
+
+
+def _backfill_required_properties(object_, required_properties, backfill_value='Unknown'):
+    for required_property in required_properties:
+        if required_property not in object_:
+            object_[required_property] = backfill_value
+    return object_
 
 
 def _dictionary_has_populated_values(dictionary):

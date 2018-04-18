@@ -7,7 +7,9 @@ from unittest import TestCase
 
 
 from .fixtures import (
+    SME_V3,
     SME_V5,
+    SME_CONTACT_V2,
     SME_CONTACT_V3,
     ADDRESS_V1,
     PERSON_V1,
@@ -23,6 +25,7 @@ from sme_finance_application_schema.translations import (
     sme_v5_and_contact_v3_to_finance_application_v3_translator,
     finance_application_v3_to_sme_v5,
     finance_application_v3_to_sme_contact_v3,
+    sme_v3_and_contact_v2_to_finance_application_v3_translator,
 )
 
 
@@ -34,23 +37,75 @@ UNTRANSLATED_CONTACT_V3_FIELDS = [
 ]
 
 
+# The following are fields that do not appear in the objects when they are translated from sme_v3 / sme_contact_v2
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS = [
+    # Not present in SME_V3
+    'employees',
+    'registration_date',
+    'addresses',
+    'free_form',
+    'accounting_software',
+    'company_credit_rating',
+    'count_of_all_ccjs',
+    'count_of_invoiced_customers',
+    'count_of_unsatisfied_ccjs',
+    'exports',
+    'outstanding_invoices',
+    'purchase_orders',
+    'sets_of_filed_accounts',
+    'stock_imports',
+    'total_value_of_unsatisfied_ccjs',
+]
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS = [
+    # Unsupported
+    'actors',
+]
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS = [
+    # Not present in SME_V3 or CONTACT_V2
+    'date_of_birth'
+]
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS = [
+    # Not present in SME_V3
+    'free_form',
+    'property_ownership',
+    'permission_for_development',
+    'property_development_type',
+    'property_work_started',
+    'asset_type',
+    'type_of_mortgage',
+    'experience_in_development',
+    'deposit',
+    'vehicle_type',
+    'type_of_property',
+    'guarantor_available'
+]
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS = []
+UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS = [
+    # Cannot generate from SME_V3
+    'max_personal_credit_rating',
+    'sum_outstanding_mortgage_on_property',
+    'max_familiarity_with_financing',
+    'min_personal_credit_rating',
+]
+
+
 # The following are fields that do not appear in the objects when they are translated from sme_v5 / sme_contact_v3
-UNTRANSLATED_ENTITY_V1_FIELDS = [
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS = [
     # Not present in SME_V5
     'employees',
     'registration_date',
     'addresses',
     'free_form',
 ]
-UNTRANSLATED_FINANCE_APPLICATION_V3_FIELDS = [
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS = [
     # Unsupported
     'actors',
 ]
-UNTRANSLATED_PERSON_V1_FIELDS = [
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_PERSON_V1_FIELDS = [
     # Not present in SME_V5 or CONTACT_V3
     'date_of_birth'
 ]
-UNTRANSLATED_FINANCE_NEED_V1_FIELDS = [
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_NEED_V1_FIELDS = [
     # Not present in SME_V5
     'free_form',
     'property_ownership',
@@ -64,8 +119,8 @@ UNTRANSLATED_FINANCE_NEED_V1_FIELDS = [
     'vehicle_type',
     'type_of_property',
 ]
-UNTRANSLATED_ADDRESS_V1_FIELDS = []
-UNTRANSLATED_AGGREGATED_ACTORS_V1_FIELDS = [
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ADDRESS_V1_FIELDS = []
+UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_AGGREGATED_ACTORS_V1_FIELDS = [
     # Cannot generate from SME_v5
     'max_personal_credit_rating',
     'sum_outstanding_mortgage_on_property',
@@ -117,6 +172,8 @@ class TestSampleData(TestCase):
 
 
     def test_sample_data_is_valid(self):
+        self.validity_of_data_subtest(SME_V3,'sme_v3')
+        self.validity_of_data_subtest(SME_CONTACT_V2,'sme_contact_v2')
         self.validity_of_data_subtest(SME_V5,'sme_v5')
         self.validity_of_data_subtest(SME_CONTACT_V3,'sme_contact_v3')
         self.validity_of_data_subtest(FINANCE_APPLICATION_V3,'finance_application_v3')
@@ -130,6 +187,8 @@ class TestSampleData(TestCase):
 
 
     def test_sample_data_is_complete(self):
+        self.completion_of_data_subtest(SME_V3,'sme_v3')
+        self.completion_of_data_subtest(SME_CONTACT_V2,'sme_contact_v2')
         self.completion_of_data_subtest(SME_V5,'sme_v5')
         self.completion_of_data_subtest(SME_CONTACT_V3,'sme_contact_v3')
         self.completion_of_data_subtest(FINANCE_APPLICATION_V3,'finance_application_v3')
@@ -146,17 +205,17 @@ class TestSampleData(TestCase):
 class TestTranslations(TestCase):
     def test_sme_v5_and_contact_v3_to_finance_application_v3(self):
         expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
-        for field in UNTRANSLATED_FINANCE_APPLICATION_V3_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS:
             expected_finance_application_v3.pop(field)
-        for field in UNTRANSLATED_ENTITY_V1_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS:
             expected_finance_application_v3['requesting_entity'].pop(field)
-        for field in UNTRANSLATED_PERSON_V1_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_PERSON_V1_FIELDS:
             expected_finance_application_v3['applicant'].pop(field)
-        for field in UNTRANSLATED_FINANCE_NEED_V1_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_NEED_V1_FIELDS:
             expected_finance_application_v3['finance_need'].pop(field)
-        for field in UNTRANSLATED_ADDRESS_V1_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ADDRESS_V1_FIELDS:
             expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
-        for field in UNTRANSLATED_AGGREGATED_ACTORS_V1_FIELDS:
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_AGGREGATED_ACTORS_V1_FIELDS:
             expected_finance_application_v3['aggregated_actors'].pop(field)
 
         translated_finance_application_v3 = sme_v5_and_contact_v3_to_finance_application_v3_translator(SME_V5, SME_CONTACT_V3)
@@ -188,3 +247,59 @@ class TestTranslations(TestCase):
 
         translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(FINANCE_APPLICATION_V3)
         self.assertDictEqual(translated_sme_contact_v3, expected_sme_contact_v3)
+
+
+    def test_sme_v3_and_contact_v2_to_finance_application_v3_no_backfill(self):
+        expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS:
+            expected_finance_application_v3.pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS:
+            expected_finance_application_v3['requesting_entity'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
+            expected_finance_application_v3['applicant'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS:
+            expected_finance_application_v3['finance_need'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS:
+            expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
+            expected_finance_application_v3['aggregated_actors'].pop(field)
+
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3, SME_CONTACT_V2)
+        self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+
+
+    def test_sme_v3_and_contact_v2_to_finance_application_v3_with_backfill(self):
+        self.maxDiff=None
+        expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS:
+            expected_finance_application_v3.pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS:
+            expected_finance_application_v3['requesting_entity'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
+            expected_finance_application_v3['applicant'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS:
+            expected_finance_application_v3['finance_need'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS:
+            expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
+            expected_finance_application_v3['aggregated_actors'].pop(field)
+
+        sme_v3_with_missing_information = copy.deepcopy(SME_V3)
+        sme_v3_with_missing_information.pop('requested_amount')
+
+        sme_contact_v2_with_missing_information = copy.deepcopy(SME_CONTACT_V2)
+        sme_contact_v2_with_missing_information.pop('sme_name')
+        sme_contact_v2_with_missing_information.pop('applicant_first_name')
+        sme_contact_v2_with_missing_information.pop('applicant_surname')
+
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_missing_information, sme_contact_v2_with_missing_information)
+        with self.assertRaises(AssertionError):
+            self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+
+        expected_finance_application_v3['requesting_entity']['name'] = 'Unknown'
+        expected_finance_application_v3['finance_need']['requested_amount'] = 0
+        expected_finance_application_v3['applicant']['first_name'] = 'Unknown'
+        expected_finance_application_v3['applicant']['surname'] = 'Unknown'
+
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_missing_information, sme_contact_v2_with_missing_information, backfill_required_properties=True)
+        self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
