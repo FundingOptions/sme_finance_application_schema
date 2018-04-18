@@ -154,7 +154,7 @@ def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, b
     }
     requesting_entity = _remove_key_if_value_is_none(requesting_entity)
     if backfill_required_properties:
-        requesting_entity = _backfill_required_properties(requesting_entity, ['name'], 'Unknown')
+        requesting_entity = _backfill_required_properties(requesting_entity, {'name': 'Unknown', 'months_revenue': 0})
 
     # sme_v3 expresses card_revenue as a percentage, entity_v1 as a value
     card_revenue_as_percentage = requesting_entity.get('card_revenue')
@@ -165,6 +165,16 @@ def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, b
     elif card_revenue_as_percentage:
         # If we can't work it out, discard it
         requesting_entity.pop('card_revenue')
+
+    # sme_v3 doesnt have a limit on months_revenue, entity_v1 does
+    if int(requesting_entity['months_revenue']) > 1800:
+        requesting_entity['months_revenue'] = 1800
+
+    # sme_v3 has an error in the partnership sizes
+    if requesting_entity.get('legal_status') == 'partnership_less_than_5':
+        requesting_entity['legal_status'] = 'partnership_less_than_equal_to_3'
+    elif requesting_entity.get('legal_status') == 'partnership_more_than_4':
+        requesting_entity['legal_status'] = 'partnership_greater_than_3'
 
     return requesting_entity
 
@@ -203,7 +213,7 @@ def sme_v3_to_finance_need_v1_translator(sme, backfill_required_properties=False
     }
     finance_need = _remove_key_if_value_is_none(finance_need)
     if backfill_required_properties:
-        finance_need = _backfill_required_properties(finance_need, ['requested_amount'], 0)
+        finance_need = _backfill_required_properties(finance_need, {'requested_amount': 0})
     return finance_need
 
 
@@ -262,7 +272,7 @@ def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_proper
     person = _remove_key_if_value_is_none(person)
 
     if backfill_required_properties:
-        person = _backfill_required_properties(person, ['first_name', 'surname'], 'Unknown')
+        person = _backfill_required_properties(person, {'first_name': 'Unknown', 'surname': 'Unknown'})
 
     return person
 
@@ -279,10 +289,10 @@ def _remove_key_if_value_is_none(dictionary):
     )
 
 
-def _backfill_required_properties(object_, required_properties, backfill_value):
-    for required_property in required_properties:
+def _backfill_required_properties(object_, backfill_values):
+    for required_property, value in backfill_values.items():
         if required_property not in object_:
-            object_[required_property] = backfill_value
+            object_[required_property] = value
     return object_
 
 

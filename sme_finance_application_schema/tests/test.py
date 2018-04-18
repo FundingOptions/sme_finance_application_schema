@@ -213,23 +213,39 @@ class TestSampleData(TestCase):
 
 
 class TestTranslations(TestCase):
-    def test_sme_v5_and_contact_v3_to_finance_application_v3(self):
-        expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS:
-            expected_finance_application_v3.pop(field)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS:
-            expected_finance_application_v3['requesting_entity'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_PERSON_V1_FIELDS:
-            expected_finance_application_v3['applicant'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_NEED_V1_FIELDS:
-            expected_finance_application_v3['finance_need'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ADDRESS_V1_FIELDS:
-            expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_AGGREGATED_ACTORS_V1_FIELDS:
-            expected_finance_application_v3['aggregated_actors'].pop(field)
+    def setUp(self):
+        self.expected_finance_application_v3_from_sme_v3_and_contact_v2 = copy.deepcopy(FINANCE_APPLICATION_V3)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2.pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2['requesting_entity'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2['applicant'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2['finance_need'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2['applicant']['addresses'][0]['address'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v3_and_contact_v2['aggregated_actors'].pop(field)
 
+        self.expected_finance_application_v3_from_sme_v5_and_contact_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3.pop(field)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3['requesting_entity'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_PERSON_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3['applicant'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_NEED_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3['finance_need'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ADDRESS_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3['applicant']['addresses'][0]['address'].pop(field)
+        for field in UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_AGGREGATED_ACTORS_V1_FIELDS:
+            self.expected_finance_application_v3_from_sme_v5_and_contact_v3['aggregated_actors'].pop(field)
+
+
+    def test_sme_v5_and_contact_v3_to_finance_application_v3(self):
         translated_finance_application_v3 = sme_v5_and_contact_v3_to_finance_application_v3_translator(SME_V5, SME_CONTACT_V3)
-        self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+        self.assertDictEqual(translated_finance_application_v3, self.expected_finance_application_v3_from_sme_v5_and_contact_v3)
 
 
     def test_finance_application_v3_to_sme_v5(self):
@@ -260,44 +276,16 @@ class TestTranslations(TestCase):
 
 
     def test_sme_v3_and_contact_v2_to_finance_application_v3_no_backfill(self):
-        expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS:
-            expected_finance_application_v3.pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS:
-            expected_finance_application_v3['requesting_entity'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
-            expected_finance_application_v3['applicant'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS:
-            expected_finance_application_v3['finance_need'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS:
-            expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
-            expected_finance_application_v3['aggregated_actors'].pop(field)
-
         translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3, SME_CONTACT_V2)
-        self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+        self.assertDictEqual(translated_finance_application_v3, self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
 
 
     def test_sme_v3_and_contact_v2_to_finance_application_v3_with_backfill(self):
-        self.maxDiff=None
-        expected_finance_application_v3 = copy.deepcopy(FINANCE_APPLICATION_V3)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_APPLICATION_V3_FIELDS:
-            expected_finance_application_v3.pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS:
-            expected_finance_application_v3['requesting_entity'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_PERSON_V1_FIELDS:
-            expected_finance_application_v3['applicant'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS:
-            expected_finance_application_v3['finance_need'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS:
-            expected_finance_application_v3['applicant']['addresses'][0]['address'].pop(field)
-        for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
-            expected_finance_application_v3['aggregated_actors'].pop(field)
-
         translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3_MISSING_INFORMATION, SME_CONTACT_V2_MISSING_INFORMATION)
         with self.assertRaises(AssertionError):
-            self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+            self.assertDictEqual(translated_finance_application_v3, self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
 
+        expected_finance_application_v3 = copy.deepcopy(self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
         expected_finance_application_v3['requesting_entity']['name'] = 'Unknown'
         expected_finance_application_v3['finance_need']['requested_amount'] = 0
         expected_finance_application_v3['applicant']['first_name'] = 'Unknown'
@@ -305,3 +293,22 @@ class TestTranslations(TestCase):
 
         translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3_MISSING_INFORMATION, SME_CONTACT_V2_MISSING_INFORMATION, backfill_required_properties=True)
         self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
+
+
+    def test_sme_v3_and_contact_v2_to_finance_application_v3_incorrect_months_revenue(self):
+        pass
+
+
+    def test_sme_v3_and_contact_v2_to_finance_application_v3_incorrect_legal_status(self):
+        legal_status_mapping = {
+            'partnership_less_than_5': 'partnership_less_than_equal_to_3',
+            'partnership_more_than_4': 'partnership_greater_than_3'
+        }
+        for original_value, new_value in legal_status_mapping.items():
+            with self.subTest(original_value=original_value, new_value=new_value):
+                sme_v3_with_incorrect_legal_status = copy.deepcopy(SME_V3)
+                sme_v3_with_incorrect_legal_status.update({'legal_status': original_value})
+                expected_finance_application_v3 = copy.deepcopy(self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
+                expected_finance_application_v3['requesting_entity']['legal_status'] = new_value
+                translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_incorrect_legal_status, SME_CONTACT_V2, backfill_required_properties=True)
+                self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
