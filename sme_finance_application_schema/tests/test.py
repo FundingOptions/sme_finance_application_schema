@@ -296,7 +296,12 @@ class TestTranslations(TestCase):
 
 
     def test_sme_v3_and_contact_v2_to_finance_application_v3_incorrect_months_revenue(self):
-        pass
+        sme_v3_with_incorrect_months_revenue = copy.deepcopy(SME_V3)
+        sme_v3_with_incorrect_months_revenue.update({'months_revenue': 2000})
+        expected_finance_application_v3 = copy.deepcopy(self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
+        expected_finance_application_v3['requesting_entity']['months_revenue'] = 1800
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_incorrect_months_revenue, SME_CONTACT_V2)
+        self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
 
 
     def test_sme_v3_and_contact_v2_to_finance_application_v3_incorrect_legal_status(self):
@@ -310,5 +315,5 @@ class TestTranslations(TestCase):
                 sme_v3_with_incorrect_legal_status.update({'legal_status': original_value})
                 expected_finance_application_v3 = copy.deepcopy(self.expected_finance_application_v3_from_sme_v3_and_contact_v2)
                 expected_finance_application_v3['requesting_entity']['legal_status'] = new_value
-                translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_incorrect_legal_status, SME_CONTACT_V2, backfill_required_properties=True)
+                translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_incorrect_legal_status, SME_CONTACT_V2)
                 self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
