@@ -154,7 +154,7 @@ def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, b
     }
     requesting_entity = _remove_key_if_value_is_none(requesting_entity)
     if backfill_required_properties:
-        requesting_entity = _backfill_required_properties(requesting_entity, ['name'])
+        requesting_entity = _backfill_required_properties(requesting_entity, ['name'], 'Unknown')
 
     # sme_v3 expresses card_revenue as a percentage, entity_v1 as a value
     card_revenue_as_percentage = requesting_entity.get('card_revenue')
@@ -203,7 +203,7 @@ def sme_v3_to_finance_need_v1_translator(sme, backfill_required_properties=False
     }
     finance_need = _remove_key_if_value_is_none(finance_need)
     if backfill_required_properties:
-        finance_need = _backfill_required_properties(finance_need, ['requested_amount'], backfill_value=0)
+        finance_need = _backfill_required_properties(finance_need, ['requested_amount'], 0)
     return finance_need
 
 
@@ -262,7 +262,7 @@ def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_proper
     person = _remove_key_if_value_is_none(person)
 
     if backfill_required_properties:
-        person = _backfill_required_properties(person, ['first_name', 'surname'])
+        person = _backfill_required_properties(person, ['first_name', 'surname'], 'Unknown')
 
     return person
 
@@ -279,7 +279,7 @@ def _remove_key_if_value_is_none(dictionary):
     )
 
 
-def _backfill_required_properties(object_, required_properties, backfill_value='Unknown'):
+def _backfill_required_properties(object_, required_properties, backfill_value):
     for required_property in required_properties:
         if required_property not in object_:
             object_[required_property] = backfill_value
