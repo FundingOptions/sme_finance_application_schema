@@ -277,7 +277,7 @@ def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_proper
         person = _backfill_required_properties(person, {'first_name': 'Unknown', 'surname': 'Unknown'})
 
     telephone = person.get('telephone')
-    if 'telephone':
+    if telephone:
         # Generally, correction to E.164 involves dropping the leading zeros
         person['telephone'] = re.sub('^0+', '', telephone)
 
