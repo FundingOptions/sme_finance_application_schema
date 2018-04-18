@@ -21,6 +21,8 @@ from .fixtures import (
     ACTOR_V1_DIRECTOR_2,
     ACTOR_V1_GUARANTOR,
     FINANCE_APPLICATION_V3,
+    AGGREGATED_ACTORS_V1,
+    AGGREGATED_ACTORS_V1_INCOMPLETE,
     FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE,
 )
 from sme_finance_application_schema.translations import (
@@ -181,6 +183,7 @@ class TestSampleData(TestCase):
         self.validity_of_data_subtest(SME_V5,'sme_v5')
         self.validity_of_data_subtest(SME_CONTACT_V3,'sme_contact_v3')
         self.validity_of_data_subtest(FINANCE_APPLICATION_V3,'finance_application_v3')
+        self.validity_of_data_subtest(FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE,'finance_application_v3')
         self.validity_of_data_subtest(FINANCE_NEED_V1,'finance_need_v1')
         self.validity_of_data_subtest(ENTITY_V1,'entity_v1')
         self.validity_of_data_subtest(PERSON_V1,'person_v1')
@@ -188,6 +191,8 @@ class TestSampleData(TestCase):
         self.validity_of_data_subtest(ACTOR_V1_DIRECTOR_1,'actor_v1')
         self.validity_of_data_subtest(ACTOR_V1_DIRECTOR_2,'actor_v1')
         self.validity_of_data_subtest(ACTOR_V1_GUARANTOR,'actor_v1')
+        self.validity_of_data_subtest(AGGREGATED_ACTORS_V1,'aggregated_actors_v1')
+        self.validity_of_data_subtest(AGGREGATED_ACTORS_V1_INCOMPLETE,'aggregated_actors_v1')
 
 
     def test_sample_data_is_complete(self):
@@ -203,6 +208,7 @@ class TestSampleData(TestCase):
         self.completion_of_data_subtest(ACTOR_V1_DIRECTOR_1,'actor_v1')
         self.completion_of_data_subtest(ACTOR_V1_DIRECTOR_2,'actor_v1')
         self.completion_of_data_subtest(ACTOR_V1_GUARANTOR,'actor_v1')
+        self.completion_of_data_subtest(AGGREGATED_ACTORS_V1,'aggregated_actors_v1')
         # TODO - test entity_address and actor_address structures
 
 
@@ -237,7 +243,7 @@ class TestTranslations(TestCase):
     def test_finance_application_v3_to_sme_v5_partial_aggregated(self):
         expected_sme_v5 = copy.deepcopy(SME_V5)
         expected_sme_v5.update({
-            'familiarity_with_financing': 'ok',
+            'familiarity_with_financing': 'expert',
         })
         self.maxDiff=None
         translated_sme_v5 = finance_application_v3_to_sme_v5(FINANCE_APPLICATION_V3_AGGREGATED_INCOMPLETE)

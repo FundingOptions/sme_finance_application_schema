@@ -219,7 +219,7 @@ AGGREGATED_ACTORS_V1 = {
 AGGREGATED_ACTORS_V1_INCOMPLETE = {
     'sum_value_of_property_equity': 10000,
     'sum_value_of_pension': 1000000,
-    'max_familiarity_with_financing': 'ok',
+    'max_familiarity_with_financing': 'expert',
     'min_personal_credit_rating': 'excellent',
 }
 
