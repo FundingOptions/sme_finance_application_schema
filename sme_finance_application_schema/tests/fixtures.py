@@ -34,6 +34,10 @@ SME_V3 = {
     'company_number': '123456',
 }
 
+SME_V3_MISSING_INFORMATION = copy.deepcopy(SME_V3)
+for missing_field in ['requested_amount']:
+    SME_V3_MISSING_INFORMATION.pop(missing_field)
+
 # company_number and finance_term_general not present on v5
 # card_revenue is now a value rather than percentage
 
@@ -77,6 +81,10 @@ SME_CONTACT_V2 = {
 }
 
 SME_CONTACT_V3 = copy.deepcopy(SME_CONTACT_V2)
+
+SME_CONTACT_V2_MISSING_INFORMATION = copy.deepcopy(SME_CONTACT_V2)
+for missing_field in ['sme_name', 'applicant_first_name', 'applicant_surname']:
+    SME_CONTACT_V2_MISSING_INFORMATION.pop(missing_field)
 
 ADDRESS_V1 = {
     'building_number_and_street_name': '30 Great Guildford Street',

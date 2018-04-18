@@ -8,8 +8,10 @@ from unittest import TestCase
 
 from .fixtures import (
     SME_V3,
+    SME_V3_MISSING_INFORMATION,
     SME_V5,
     SME_CONTACT_V2,
+    SME_CONTACT_V2_MISSING_INFORMATION,
     SME_CONTACT_V3,
     ADDRESS_V1,
     PERSON_V1,
@@ -173,7 +175,9 @@ class TestSampleData(TestCase):
 
     def test_sample_data_is_valid(self):
         self.validity_of_data_subtest(SME_V3,'sme_v3')
+        self.validity_of_data_subtest(SME_V3_MISSING_INFORMATION,'sme_v3')
         self.validity_of_data_subtest(SME_CONTACT_V2,'sme_contact_v2')
+        self.validity_of_data_subtest(SME_CONTACT_V2_MISSING_INFORMATION,'sme_contact_v2')
         self.validity_of_data_subtest(SME_V5,'sme_v5')
         self.validity_of_data_subtest(SME_CONTACT_V3,'sme_contact_v3')
         self.validity_of_data_subtest(FINANCE_APPLICATION_V3,'finance_application_v3')
@@ -284,15 +288,7 @@ class TestTranslations(TestCase):
         for field in UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS:
             expected_finance_application_v3['aggregated_actors'].pop(field)
 
-        sme_v3_with_missing_information = copy.deepcopy(SME_V3)
-        sme_v3_with_missing_information.pop('requested_amount')
-
-        sme_contact_v2_with_missing_information = copy.deepcopy(SME_CONTACT_V2)
-        sme_contact_v2_with_missing_information.pop('sme_name')
-        sme_contact_v2_with_missing_information.pop('applicant_first_name')
-        sme_contact_v2_with_missing_information.pop('applicant_surname')
-
-        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_missing_information, sme_contact_v2_with_missing_information)
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3_MISSING_INFORMATION, SME_CONTACT_V2_MISSING_INFORMATION)
         with self.assertRaises(AssertionError):
             self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
 
@@ -301,5 +297,5 @@ class TestTranslations(TestCase):
         expected_finance_application_v3['applicant']['first_name'] = 'Unknown'
         expected_finance_application_v3['applicant']['surname'] = 'Unknown'
 
-        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(sme_v3_with_missing_information, sme_contact_v2_with_missing_information, backfill_required_properties=True)
+        translated_finance_application_v3 = sme_v3_and_contact_v2_to_finance_application_v3_translator(SME_V3_MISSING_INFORMATION, SME_CONTACT_V2_MISSING_INFORMATION, backfill_required_properties=True)
         self.assertDictEqual(translated_finance_application_v3, expected_finance_application_v3)
