@@ -1,5 +1,7 @@
 import re
 
+BACKFILL_STRING_VALUE = 'Unknown'
+
 def finance_application_v3_to_sme_contact_v3(finance_application, remove_backfilling=False):
     applicant = finance_application['applicant']
     requesting_entity = finance_application['requesting_entity']
@@ -18,7 +20,7 @@ def finance_application_v3_to_sme_contact_v3(finance_application, remove_backfil
     if remove_backfilling:
         properties_that_could_have_been_backfilled = ['sme_name', 'applicant_surname', 'applicant_first_name']
         for prop in properties_that_could_have_been_backfilled:
-            if sme_contact_v3[prop] == 'Unknown':
+            if sme_contact_v3[prop] == BACKFILL_STRING_VALUE:
                 sme_contact_v3[prop] = None
 
     if applicant.get('addresses'):
@@ -165,7 +167,7 @@ def sme_v3_and_contact_v2_to_requesting_entity_v1_translator(sme, sme_contact, b
     }
     requesting_entity = _remove_key_if_value_is_none(requesting_entity)
     if backfill_required_properties:
-        requesting_entity = _backfill_required_properties(requesting_entity, {'name': 'Unknown', 'months_revenue': 0})
+        requesting_entity = _backfill_required_properties(requesting_entity, {'name': BACKFILL_STRING_VALUE, 'months_revenue': 0})
 
     # sme_v3 expresses card_revenue as a percentage, entity_v1 as a value
     card_revenue_as_percentage = requesting_entity.get('card_revenue')
@@ -260,8 +262,8 @@ def sme_v5_to_aggregated_actors_v1_translator(sme):
 
 def sme_contact_v3_to_address_v1_translator(sme_contact):
     address = {
-        'building_number_and_street_name': sme_contact.get('address_line_1') or 'Unknown',
-        'postcode': sme_contact.get('postcode') or 'Unknown',
+        'building_number_and_street_name': sme_contact.get('address_line_1') or BACKFILL_STRING_VALUE,
+        'postcode': sme_contact.get('postcode') or BACKFILL_STRING_VALUE,
         'post_town': sme_contact.get('city'),
         'locality_name': sme_contact.get('address_line_2'),
     }
@@ -283,7 +285,7 @@ def sme_contact_v2_to_person_v1_translator(sme_contact, backfill_required_proper
     person = _remove_key_if_value_is_none(person)
 
     if backfill_required_properties:
-        person = _backfill_required_properties(person, {'first_name': 'Unknown', 'surname': 'Unknown'})
+        person = _backfill_required_properties(person, {'first_name': BACKFILL_STRING_VALUE, 'surname': BACKFILL_STRING_VALUE})
 
     telephone = person.get('telephone')
     if telephone:
