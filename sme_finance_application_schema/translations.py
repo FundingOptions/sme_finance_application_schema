@@ -1,6 +1,6 @@
 import re
 
-def finance_application_v3_to_sme_contact_v3(finance_application, backfill_value='Unknown'):
+def finance_application_v3_to_sme_contact_v3(finance_application, remove_backfilling=False):
     applicant = finance_application['applicant']
     requesting_entity = finance_application['requesting_entity']
     sme_contact_v3 = {
@@ -15,10 +15,11 @@ def finance_application_v3_to_sme_contact_v3(finance_application, backfill_value
     # These cannot be 'None' in finance_application_v3
     # so a backfill value may have been used to populate them.
     # This value should be removed at this point
-    properties_that_could_have_been_backfilled = ['sme_name', 'applicant_surname', 'applicant_first_name']
-    for prop in properties_that_could_have_been_backfilled:
-        if sme_contact_v3[prop] == backfill_value:
-            sme_contact_v3[prop] = None
+    if remove_backfilling:
+        properties_that_could_have_been_backfilled = ['sme_name', 'applicant_surname', 'applicant_first_name']
+        for prop in properties_that_could_have_been_backfilled:
+            if sme_contact_v3[prop] == 'Unknown':
+                sme_contact_v3[prop] = None
 
     if applicant.get('addresses'):
         if len(applicant['addresses']) > 1:

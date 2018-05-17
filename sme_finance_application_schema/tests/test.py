@@ -290,7 +290,7 @@ class TestTranslations(TestCase):
         finance_application_v3_with_backfilled_details['applicant']['first_name'] = backfill_value
         finance_application_v3_with_backfilled_details['applicant']['surname'] = backfill_value
         finance_application_v3_with_backfilled_details['requesting_entity']['name'] = backfill_value
-        translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(finance_application_v3_with_backfilled_details)
+        translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(finance_application_v3_with_backfilled_details, remove_backfilling=True)
         self.assertDictEqual(translated_sme_contact_v3, expected_sme_contact_v3)
 
 
