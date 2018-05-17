@@ -281,14 +281,16 @@ class TestTranslations(TestCase):
         expected_sme_contact_v3 = copy.deepcopy(SME_CONTACT_V3)
         expected_sme_contact_v3.pop('applicant_first_name')
         expected_sme_contact_v3.pop('applicant_surname')
+        expected_sme_contact_v3.pop('sme_name')
         for field in UNTRANSLATED_CONTACT_V3_FIELDS:
             expected_sme_contact_v3.pop(field)
 
-        finance_application_v3_with_backfilled_applicant = copy.deepcopy(FINANCE_APPLICATION_V3)
+        finance_application_v3_with_backfilled_details = copy.deepcopy(FINANCE_APPLICATION_V3)
         backfill_value = 'Unknown'
-        finance_application_v3_with_backfilled_applicant['applicant']['first_name'] = backfill_value
-        finance_application_v3_with_backfilled_applicant['applicant']['surname'] = backfill_value
-        translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(finance_application_v3_with_backfilled_applicant)
+        finance_application_v3_with_backfilled_details['applicant']['first_name'] = backfill_value
+        finance_application_v3_with_backfilled_details['applicant']['surname'] = backfill_value
+        finance_application_v3_with_backfilled_details['requesting_entity']['name'] = backfill_value
+        translated_sme_contact_v3 = finance_application_v3_to_sme_contact_v3(finance_application_v3_with_backfilled_details)
         self.assertDictEqual(translated_sme_contact_v3, expected_sme_contact_v3)
 
 
