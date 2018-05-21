@@ -266,11 +266,13 @@ def sme_v5_to_aggregated_actors_v1_translator(sme):
 
 def sme_contact_v3_to_address_v1_translator(sme_contact, backfill_required_properties=False):
     address = {
-        'building_number_and_street_name': sme_contact.get('address_line_1') or (backfill_required_properties and BACKFILL_STRING_VALUE),
-        'postcode': sme_contact.get('postcode') or (backfill_required_properties and BACKFILL_STRING_VALUE),
+        'building_number_and_street_name': sme_contact.get('address_line_1'),
+        'postcode': sme_contact.get('postcode'),
         'post_town': sme_contact.get('city'),
         'locality_name': sme_contact.get('address_line_2'),
     }
+    if backfill_required_properties:
+        address = _backfill_required_properties(address, {'building_number_and_street_name': BACKFILL_STRING_VALUE, 'postcode': BACKFILL_STRING_VALUE})
     return _remove_key_if_value_is_none(address)
 
 
