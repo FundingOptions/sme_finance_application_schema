@@ -73,6 +73,7 @@ SME_CONTACT_V2 = {
     'applicant_first_name': 'Dave',
     'applicant_surname': 'dd',
     'telephone': '+447445387241',
+    'mobile_phone': '07911111111',
     'sme_name': 'ddsaasd',
     'email': 'nestor.arocha@fundingoptions.com',
     'company_number': '123456',
