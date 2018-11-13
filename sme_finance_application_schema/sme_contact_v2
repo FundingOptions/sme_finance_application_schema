@@ -72,7 +72,7 @@
         "mobile_phone": {
             "title": "Mobile phone number",
             "description": "A suitable mobile phone number the lender can use to progress the application",
-            "type": "string",
+            "type": "string"
         }
     }
 }
