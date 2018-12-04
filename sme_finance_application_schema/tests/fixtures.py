@@ -182,6 +182,8 @@ ENTITY_V1 = {
         'address': copy.deepcopy(ADDRESS_V1),
     }],
     'free_form': 'A string',
+    'summary_of_business_activities': 'A string',
+    'main_source_of_revenue': 'A string',
     'sets_of_filed_accounts': 10,
     'count_of_unsatisfied_ccjs': 1,
     'count_of_all_ccjs': 3,
@@ -194,6 +196,7 @@ ACTOR_V1_DIRECTOR_1 = {
     'value_of_pension': 10000,
     'familiarity_with_financing': 'had_finance_before',
     'personal_credit_rating': 'ok',
+    'has_changed_address': False,
     'role': 'director',
     'person': copy.deepcopy(PERSON_V1),
 }
@@ -205,6 +208,7 @@ ACTOR_V1_DIRECTOR_2 = {
     'value_of_pension': 30000,
     'familiarity_with_financing': 'first_time',
     'personal_credit_rating': 'poor',
+    'has_changed_address': True,
     'role': 'director',
     'person': copy.deepcopy(PERSON_V1),
 }
@@ -216,6 +220,7 @@ ACTOR_V1_GUARANTOR = {
     'value_of_pension': 20000,
     'familiarity_with_financing': 'expert',
     'personal_credit_rating': 'excellent',
+    'has_changed_address': True,
     'role': 'guarantor',
     'person': copy.deepcopy(PERSON_V1),
 }

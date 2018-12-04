@@ -67,6 +67,12 @@
             "description": "The average monthly revenue of the SME, in GBP",
             "type": "integer"
         },
+        "summary_of_business_activities":{
+            "type": "string"
+        },
+        "main_source_of_revenue":{
+            "type": "string"
+        },
         "free_form": {
             "type": "string"
         },

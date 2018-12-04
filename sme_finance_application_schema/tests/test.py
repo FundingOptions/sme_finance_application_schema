@@ -50,6 +50,8 @@ UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS = [
     'registration_date',
     'addresses',
     'free_form',
+    'summary_of_business_activities',
+    'main_source_of_revenue',
     'accounting_software',
     'company_credit_rating',
     'count_of_all_ccjs',
@@ -108,6 +110,8 @@ UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS = [
     'registration_date',
     'addresses',
     'free_form',
+    'summary_of_business_activities',
+    'main_source_of_revenue',
 ]
 UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS = [
     # Unsupported
