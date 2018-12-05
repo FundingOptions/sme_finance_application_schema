@@ -50,7 +50,6 @@ UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ENTITY_V1_FIELDS = [
     'registration_date',
     'addresses',
     'free_form',
-    'summary_of_business_activities',
     'main_source_of_revenue',
     'accounting_software',
     'company_credit_rating',
@@ -91,7 +90,8 @@ UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_FINANCE_NEED_V1_FIELDS = [
     'deposit',
     'vehicle_type',
     'type_of_property',
-    'guarantor_available'
+    'guarantor_available',
+    'main_source_of_revenue',
 ]
 UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_ADDRESS_V1_FIELDS = []
 UNTRANSLATED_FROM_SME_V3_CONTACT_V2_TO_AGGREGATED_ACTORS_V1_FIELDS = [
@@ -110,7 +110,6 @@ UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ENTITY_V1_FIELDS = [
     'registration_date',
     'addresses',
     'free_form',
-    'summary_of_business_activities',
     'main_source_of_revenue',
 ]
 UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_APPLICATION_V3_FIELDS = [
@@ -134,6 +133,7 @@ UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_FINANCE_NEED_V1_FIELDS = [
     'deposit',
     'vehicle_type',
     'type_of_property',
+    'main_source_of_revenue',
 ]
 UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_ADDRESS_V1_FIELDS = []
 UNTRANSLATED_FROM_SME_V5_CONTACT_V3_TO_AGGREGATED_ACTORS_V1_FIELDS = [

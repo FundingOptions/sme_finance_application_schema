@@ -51,10 +51,10 @@
                 "excellent"
             ]
         },
-        "has_changed_address": {
-            "title": "Changed address in the last 3 years",
+        "previous_address": {
+            "title": "Previous address, if changed address in the last 3 years",
             "description": "Has this particular actor changed address in the last 3 year period",
-            "type": "boolean"
+            "type": "string"
         },
         "person": {"$ref": "person_v1"},
         "role": {
